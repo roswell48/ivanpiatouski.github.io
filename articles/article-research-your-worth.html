@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Three Ways to Research Your Worth - Ivan Piatouski</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1000;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #333;
+            display: inline-block;
+            height: 50px;
+        }
+
+        .logo-img {
+            height: 100%;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: #0066cc;
+        }
+
+        nav li:last-child a {
+            background: #0066cc;
+            color: white !important;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem 3rem 2rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .article-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .article-meta {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .article-meta span {
+            margin-right: 1rem;
+        }
+
+        .article-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #333;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .tag:hover {
+            background: #0066cc;
+            color: white;
+        }
+
+        /* Article Content */
+        .article-content {
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        .article-content h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            color: #444;
+        }
+
+        .article-content strong {
+            color: #0066cc;
+            font-weight: 600;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.8rem;
+            color: #444;
+        }
+
+        .highlight-box {
+            background: #f9f9f9;
+            border-left: 4px solid #0066cc;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .data-example {
+            background: #f0f7ff;
+            border: 1px solid #0066cc;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            overflow-x: auto;
+        }
+
+        .three-numbers {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .number-box {
+            background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
+            border: 2px solid #ddd;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .number-box.floor {
+            border-color: #e74c3c;
+            background: linear-gradient(135deg, #fee 0%, #fdd 100%);
+        }
+
+        .number-box.target {
+            border-color: #27ae60;
+            background: linear-gradient(135deg, #efe 0%, #dfd 100%);
+        }
+
+        .number-box.ceiling {
+            border-color: #3498db;
+            background: linear-gradient(135deg, #eef 0%, #ddf 100%);
+        }
+
+        .number-box h3 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .number-box .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .number-box p {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        /* Article Footer */
+        .article-footer {
+            border-top: 2px solid #e0e0e0;
+            padding-top: 2rem;
+            margin-top: 3rem;
+        }
+
+        .related-articles {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .related-articles h4 {
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        .related-article-link {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .related-article-link:hover {
+            text-decoration: underline;
+        }
+
+        .related-article-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .author-bio {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .author-bio h4 {
+            margin-bottom: 0.5rem;
+            color: #222;
+        }
+
+        .author-bio p {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .article-cta {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .article-cta h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-cta p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            background: white;
+            color: #0066cc;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .cta-button:hover {
+            background: #f0f0f0;
+            color: #0052a3;
+        }
+
+        /* Footer */
+        footer {
+            background: #2a2a2a;
+            color: white;
+            padding: 4rem 0;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-left h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-ctas {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-ctas a {
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .footer-ctas a.cta-primary {
+            background: #0066cc;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .footer-ctas a.cta-primary:hover {
+            background: #0052a3;
+        }
+
+        .footer-ctas a.cta-secondary {
+            color: #999;
+            font-size: 0.95rem;
+        }
+
+        .footer-ctas a.cta-secondary:hover {
+            color: #0066cc;
+        }
+
+        .footer-center h3, .footer-right h3 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-nav-item {
+            margin-bottom: 1rem;
+        }
+
+        .footer-nav-item a {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-nav-item a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .article-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .article-content h2 {
+                font-size: 1.4rem;
+                margin-top: 2rem;
+            }
+
+            .three-numbers {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="../index.html" class="logo"><img src="../images/logo.svg" alt="Ivan" class="logo-img"></a>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">About</a></li>
+                    <li><a href="../courses.html">Courses</a></li>
+                    <li><a href="../blog.html" class="active">Articles</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                    <li><a href="../contact.html">Work with Ivan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <article>
+            <header class="article-header">
+                <h1>The Three Ways to Research Your Worth: Turn Feelings into Data</h1>
+                <p class="article-meta">
+                    <span class="author">Ivan Piatouski</span> • 
+                    <span class="date">May 20, 2026</span> • 
+                    <span class="reading-time">12 min read</span>
+                </p>
+                <div class="article-tags">
+                    <span class="tag">Market Research</span>
+                    <span class="tag">Salary Negotiation</span>
+                    <span class="tag">Career Strategy</span>
+                    <span class="tag">Data-Driven</span>
+                </div>
+            </header>
+
+            <section class="article-content">
+                <h2>From Feeling Underpaid to Knowing You're Underpaid</h2>
+                
+                <p>Here's the problem with saying "I think I'm underpaid": It's not leverage. It's a feeling. And in a negotiation, feelings get demolished by data.</p>
+                
+                <p>But what if you could walk into a conversation with actual numbers? What if instead of "I feel like I should make more," you could say "The market for this role is $85,000-$92,000, competitors are paying $90,000-$100,000, and I'm at $70,000"?</p>
+                
+                <p>That's the difference between hope and power. And it all comes from research.</p>
+
+                <h2>Why One Method Isn't Enough</h2>
+                
+                <p>A lot of people look at one salary site, see a number, and think they're done. That's a mistake.</p>
+                
+                <div class="highlight-box">
+                    <strong>Any single method has blind spots.</strong> Only using online data misses what's happening at your company. Only talking to people gives you anecdotes, not patterns. Only looking internally means you don't know if your company even pays market rate.
+                </div>
+                
+                <p>But if you do all three methods, something magical happens: <strong>They triangulate.</strong> They cross-reference each other. When all three point in the same direction, you know you're right.</p>
+
+                <h2>Method One: Online Research (The Baseline)</h2>
+                
+                <p>Online salary sites give you the starting point—what the broader market says. Here are the best ones:</p>
+
+                <div class="method-card">
+                    <h3>Glassdoor</h3>
+                    <p>The biggest one. Employees post salaries anonymously by company, job title, location, and experience. It skews toward people who are frustrated, but it's a solid starting point. Search your exact job title and location.</p>
+                </div>
+
+                <div class="method-card">
+                    <h3>Levels.fyi</h3>
+                    <p>Popular for tech. Shows salary bands at major companies (Google, Meta, Microsoft) broken down by level. If you're in tech, this is often the most accurate. Shows base, stock, and bonus separately.</p>
+                </div>
+
+                <div class="method-card">
+                    <h3>Salary.com</h3>
+                    <p>Around forever. Aggregates data from multiple sources. Better for traditional jobs like accounting, project management, or operations. Good for non-tech roles.</p>
+                </div>
+
+                <div class="method-card">
+                    <h3>Bureau of Labor Statistics</h3>
+                    <p>Government data. Slower to update but granular by job title, region, and industry. Free and non-biased. Useful for understanding regional variation.</p>
+                </div>
+
+                <div class="method-card">
+                    <h3>LinkedIn Salary</h3>
+                    <p>The newest player. Pulls from LinkedIn profiles in real-time. As more people opt-in, this will become the most accurate. Worth checking but still building its database.</p>
+                </div>
+
+                <h2>How to Use Online Data Correctly</h2>
+                
+                <p>Search your job title and location on each site. Write down the **median number**, not the low end or high end. Here's what you're looking for:</p>
+
+                <div class="data-table">
+                Glassdoor: $85,000<br>
+                Levels.fyi: $92,000<br>
+                Salary.com: $80,000<br>
+                Bureau of Labor Statistics: $83,000<br>
+                LinkedIn Salary: $87,000<br>
+                <br>
+                <strong>Pattern: Roughly $80,000-$92,000</strong><br>
+                This is your market baseline.
+                </div>
+
+                <p><strong>Important caveats:</strong> This data is usually 6-12 months old, so markets move fast. Also, it's often US-focused or skewed toward major cities. If you live in Denver but are comparing yourself to San Francisco salaries, you'll be disappointed. Adjust for your location. (San Francisco salaries are roughly 40% higher than Denver for the same role.)</p>
+
+                <h2>Method Two: Inter-Company Research (The Reality Check)</h2>
+                
+                <p>This is where you find out what actual people at actual companies are making **right now**. Online data is useful, but it's also abstract. You need to talk to real people in your industry.</p>
+                
+                <div class="highlight-box">
+                    <strong>Key principle:</strong> Don't ask "How much do you make?" That's personal and awkward. Instead ask "What does your company pay for my role?" That's professional and factual.
+                </div>
+
+                <h2>How to Do Inter-Company Research</h2>
+                
+                <p><strong>Step 1: Identify 3-5 target companies</strong> similar to yours or in your field (but not your employer). Ideally companies you'd be interested in working for.</p>
+                
+                <p><strong>Step 2: Find people on LinkedIn</strong> in similar roles and reach out with something like this:</p>
+                
+                <blockquote style="background: #f0f7ff; border-left: 4px solid #0066cc; padding: 1rem; margin: 1.5rem 0; color: #444;">
+                    "Hi [name], I'm researching market rates for [role] in [location] with [your experience level]. Would you be open to a 15-minute call where I pick your brain about salary ranges in your industry? I'm not asking how much you make—just what the typical range is at your company."
+                </blockquote>
+                
+                <p>Most people say yes. They remember being where you are.</p>
+                
+                <p><strong>Step 3: Ask the right questions on the call:</strong></p>
+                
+                <ul>
+                    <li>"What's the typical range for someone in my role at your company?"</li>
+                    <li>"Where does someone with my experience typically fall in that range?"</li>
+                    <li>"What do bonus and equity look like?"</li>
+                    <li>"Are there other factors (remote work, PTO, benefits) that significantly affect the package?"</li>
+                </ul>
+                
+                <p>You're asking about the role, not about them personally. This keeps it professional.</p>
+                
+                <p><strong>Pro tip:</strong> Communities like Blind (anonymous workplace forum) or subreddits for your industry (r/webdev, r/accounting, etc.) also have good data. Remember they're anecdotal and self-selected, but they add data points.</p>
+                
+                <p>Do this with 3-5 people. A pattern emerges. You'll see ranges converge around a number.</p>
+
+                <h2>Method Three: Intra-Company Research (The Reality of Your Situation)</h2>
+                
+                <p>This is the trickiest because it requires information about your own company. And most companies won't tell you voluntarily. But there are ways to find it.</p>
+
+                <h2>How to Research Your Own Company's Pay</h2>
+                
+                <p><strong>Talk to HR:</strong> Ask "What's the typical salary range for someone at my level in my role?" Some will tell you. It's worth asking. Frame it as you're thinking about your compensation and want to understand the band.</p>
+                
+                <p><strong>Check internal job postings:</strong> If your company posts internal openings, they sometimes include salary ranges. Even without ranges, the job descriptions help you figure out if you're underleveled or overleveled compared to the posting.</p>
+                
+                <p><strong>Ask colleagues casually:</strong> "Hey, I'm thinking about compensation. Would you be comfortable sharing what you're at?" Many will. Ask 2-3 peers at your level to get a sense of the range. People are more open than you think.</p>
+                
+                <p><strong>Research executive compensation:</strong> If your company is public, look up what executives make (SEC filings). This tells you about pay structure. If private with equity, research what equivalent equity is worth at similar public companies.</p>
+
+                <h2>What You're Looking For</h2>
+                
+                <p>After doing intra-company research, you're trying to answer three questions:</p>
+                
+                <ol>
+                    <li><strong>Where does your company's pay fall relative to market?</strong> (Above, at, or below?)</li>
+                    <li><strong>Where do YOU sit within your company's range?</strong> (Bottom 10%? Middle? Upper end?)</li>
+                    <li><strong>Are bonuses, equity, and other benefits significant?</strong> (Sometimes they matter more than base salary.)</li>
+                </ol>
+
+                <h2>Triangulation: Putting All Three Methods Together</h2>
+                
+                <p>Now you've done all three methods. Here's what actual data might look like:</p>
+
+                <div class="data-table">
+                <strong>Online Research Data:</strong><br>
+                Market median: $80,000-$92,000<br>
+                <br>
+                <strong>Competitor Interviews:</strong><br>
+                Company A: $85,000-$100,000<br>
+                Company B: $90,000-$105,000<br>
+                Company C: $82,000-$95,000<br>
+                Range: $85,000-$100,000<br>
+                <br>
+                <strong>Your Company Data:</strong><br>
+                Company typical range: $75,000-$90,000<br>
+                Your current salary: $70,000<br>
+                <br>
+                <strong>Conclusion:</strong><br>
+                Market value: ~$85,000-$90,000<br>
+                You're 20% below market<br>
+                You're 15% below your company's own range
+                </div>
+                
+                <p>This is powerful. You now know:</p>
+                
+                <ul>
+                    <li>If you move to a competitor, you could ask $90,000-$95,000 and be in market</li>
+                    <li>Your company knows this too—they know what market rate is</li>
+                    <li>If they want to keep you, they need to offer at least $85,000-$90,000 or you'll leave</li>
+                    <li>You're not "hoping" for a raise—you know the number</li>
+                </ul>
+
+                <h2>Common Mistakes to Avoid</h2>
+                
+                <p><strong>Mistake #1: Only looking at the high end.</strong> You see "up to $120k" and think that's your target. No. That's the ceiling for a senior person in a major market. Look at the median, not the max.</p>
+                
+                <p><strong>Mistake #2: Not adjusting for location.</strong> San Francisco salaries are 40% higher than Denver for the same job. If you're comparing yourself to Bay Area numbers from Denver, you're setting yourself up for disappointment. Always adjust.</p>
+                
+                <p><strong>Mistake #3: Conflating job title with job content.</strong> Your title might be "Project Manager" but if you're doing product work, research both roles. If your title is "Senior" but you're doing junior work, don't overshoot. Research what you actually do.</p>
+                
+                <p><strong>Bonus mistake: Only doing one method.</strong> You need all three. One method is anecdotal. Three methods are triangulated truth.</p>
+
+                <h2>Finding Your Number</h2>
+                
+                <p>By now, you've done research across all three methods. You've got data from multiple sources. Take all that data and find <strong>the number that appears most often.</strong> Not the highest. Not the lowest. The one that shows up repeatedly across your methods.</p>
+                
+                <p><strong>That's your market number.</strong> Not your dream number. Not your floor. Your market number.</p>
+                
+                <p>This matters because when you negotiate, you'll use this as your anchor. You're not asking for more than this. You're not asking for less. You're asking for market value. And you're asking for it because you **know** it, not because you **hope** it.</p>
+
+                <h2>The Power of Data</h2>
+                
+                <p>Feeling is not leverage. <strong>Data is leverage.</strong></p>
+                
+                <p>When you walk into a negotiation with three methods pointing in the same direction, something changes. You're not nervous. You're not hoping. You're confident. Because you know what you should make.</p>
+                
+                <p>This is where the fear disappears. Because you're not guessing anymore. You have facts.</p>
+
+            </section>
+
+            <footer class="article-footer">
+                <div class="related-articles">
+                    <h4>Complete Your Negotiation Mastery</h4>
+                    <p style="color: #666; margin-bottom: 0.75rem;">Read the other articles in this series to fully master salary negotiation:</p>
+                    <p><strong><a href="./article-why-underpaid.html" style="color: #0066cc; text-decoration: none; font-weight: 600;">Why You're Probably Underpaid (And What To Do About It)</a></strong> — Understand the financial cost of not negotiating and why fear keeps you stuck.</p>
+                    <p><strong><a href="./article-how-companies-structure-pay.html" style="color: #0066cc; text-decoration: none; font-weight: 600;">How Companies Actually Structure Pay</a></strong> — Learn the paygrades, salary bands, and bell curves that determine compensation.</p>
+                    <p><strong><a href="./article-calculate-market-value.html" style="color: #0066cc; text-decoration: none; font-weight: 600;">Calculating Your Market Value</a></strong> — Turn your research into Floor, Target, and Ceiling numbers you can defend.</p>
+                </div>
+                
+                <div class="author-bio">
+                    <h4>About Ivan Piatouski</h4>
+                    <p>Career coach and salary negotiation specialist helping professionals research their market value and negotiate with confidence. Founder of comprehensive courses on negotiation, interviews, and career strategy.</p>
+                </div>
+                <div class="article-cta">
+                    <h4>Ready to Know Your Worth?</h4>
+                    <p>Learn the complete process for researching your market value and negotiating better compensation.</p>
+                    <a href="../contact.html" class="cta-button">Get Started Today</a>
+                </div>
+            </footer>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2>Secure Your Dream Job & Maximize Your Compensation</h2>
+                <div class="footer-ctas">
+                    <a href="../contact.html" class="cta-primary">Work with Ivan</a>
+                    <a href="../contact.html" class="cta-secondary">Or contact me <span class="arrow">»</span></a>
+                </div>
+            </div>
+
+            <div class="footer-center">
+                <h3>Explore</h3>
+                <div class="footer-nav-item"><a href="../courses.html">Courses</a></div>
+                <div class="footer-nav-item"><a href="../blog.html">Articles</a></div>
+                <div class="footer-nav-item"><a href="../contact.html">Contact</a></div>
+            </div>
+
+            <div class="footer-right">
+                <h3>Learn More</h3>
+                <div class="footer-nav-item"><a href="../index.html">About</a></div>
+                <div class="footer-nav-item"><a href="../contact.html">Work with Ivan</a></div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© Ivan Piatouski. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

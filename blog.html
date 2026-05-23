@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles - Ivan Piatouski</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1000;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #333;
+            display: inline-block;
+            height: 50px;
+        }
+
+        .logo-img {
+            height: 100%;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: #0066cc;
+        }
+
+        nav li:last-child a {
+            background: #0066cc;
+            color: white !important;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            transition: background 0.2s;
+        }
+
+        nav li:last-child a:hover {
+            background: #0052a3;
+            color: white;
+        }
+
+        /* Main */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.875rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+        }
+
+        /* Filters */
+        .filters {
+            margin-bottom: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .filter-btn {
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            border-color: #0066cc;
+            color: #0066cc;
+        }
+
+        .filter-btn.active {
+            background: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+
+        /* Featured Articles */
+        .featured-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .featured-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.2s;
+        }
+
+        .featured-card:hover {
+            border-color: #0066cc;
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+        }
+
+        .featured-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+
+        .featured-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-link {
+            display: inline-block;
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .card-link:hover {
+            color: #0052a3;
+        }
+
+        /* Articles List */
+        .articles-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .article-item {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            transition: all 0.2s;
+        }
+
+        .article-item:last-child {
+            border-bottom: none;
+        }
+
+        .article-item:hover {
+            padding-left: 1rem;
+        }
+
+        .article-item h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .article-item a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .article-item a:hover {
+            color: #0066cc;
+        }
+
+        .article-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .article-tag {
+            display: inline-block;
+            background: #f5f5f5;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .article-tag:hover {
+            background: #0066cc;
+            color: white;
+        }
+
+        .read-more {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .read-more:hover {
+            color: #0052a3;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 3rem 0;
+            color: #666;
+        }
+
+        .no-results p {
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2a2a2a;
+            color: white;
+            padding: 4rem 0;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .footer-left {
+            grid-column: 1;
+        }
+
+        .footer-left h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .footer-ctas {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-ctas a {
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .footer-ctas a.cta-primary {
+            background: #0066cc;
+            color: white;
+            padding: 0.875rem 1.75rem;
+            font-weight: 700;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .footer-ctas a.cta-primary:hover {
+            background: #0052a3;
+        }
+
+        .footer-ctas a.cta-secondary {
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+
+        .footer-ctas a.cta-secondary:hover {
+            color: #0066cc;
+        }
+
+        .footer-ctas .arrow {
+            color: #0066cc;
+            margin-left: 0.5rem;
+        }
+
+        .footer-center,
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-nav-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-nav-item a {
+            text-decoration: none;
+            color: white;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-nav-item a:hover {
+            color: #0066cc;
+        }
+
+        .footer-nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: #0066cc;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .footer-nav-item:hover::after {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            grid-column: 1 / -1;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-left h2 {
+                font-size: 1.3rem;
+            }
+
+            .footer-bottom {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo"><img src="./images/logo.svg" alt="Ivan" class="logo-img"></a>
+            <nav>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="blog.html">Articles</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="contact.html">Work with Ivan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Career & Negotiation Articles</h1>
+            <p>Expert advice on job searches, salary negotiation, and advancing your career</p>
+        </section>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search articles by keyword...">
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <button class="filter-btn active" data-tag="all">All</button>
+            <button class="filter-btn" data-tag="negotiation">Negotiation Tactics</button>
+            <button class="filter-btn" data-tag="salary">Salary Strategies</button>
+            <button class="filter-btn" data-tag="interviews">Interview Prep</button>
+            <button class="filter-btn" data-tag="career">Career Growth</button>
+            <button class="filter-btn" data-tag="raises">Getting Raises</button>
+            <button class="filter-btn" data-tag="job-offers">Job Offers</button>
+        </div>
+
+        <!-- Featured Articles -->
+        <section class="featured-section">
+            <div class="section-label">Featured</div>
+            <div class="featured-grid">
+                <div class="featured-card" data-article="true" data-tags="salary negotiation career-strategy">
+                    <h3>Why You're Probably Underpaid (And What To Do About It)</h3>
+                    <p>The fear that's costing you six figures. Discover how companies lowball salaries and why now is your moment to act.</p>
+                    <a href="./articles/article-why-underpaid.html" class="card-link">Read More</a>
+                </div>
+                <div class="featured-card" data-article="true" data-tags="salary negotiation career-strategy">
+                    <h3>How Companies Actually Structure Pay: The Hidden System Behind Your Salary</h3>
+                    <p>Understand the secret paygrade system companies use. Learn about salary bands, bell curves, and why you're probably hired below the midpoint.</p>
+                    <a href="./articles/article-how-companies-structure-pay.html" class="card-link">Read More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Articles List -->
+        <section class="articles-list" id="articlesList">
+            <!-- Article 1 - Featured -->
+            <div class="article-item" data-tags="salary negotiation career-strategy" data-keywords="underpaid salary negotiation fear leverage">
+                <h3><a href="./articles/article-why-underpaid.html">Why You're Probably Underpaid (And What To Do About It)</a></h3>
+                <p class="article-description">The fear that's costing you six figures. Discover how companies lowball salaries, why you're underpaid, and why now is your moment to act.</p>
+                <div class="article-meta">
+                    <span class="article-tag" data-tag="salary">Salary Strategies</span>
+                    <span class="article-tag" data-tag="negotiation">Negotiation Tactics</span>
+                    <span class="article-tag" data-tag="career">Career Growth</span>
+                    <a href="./articles/article-why-underpaid.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+
+            <!-- Article 2 - Featured -->
+            <div class="article-item" data-tags="salary negotiation career-strategy" data-keywords="paygrades salary bands bell curve compensation structure">
+                <h3><a href="./articles/article-how-companies-structure-pay.html">How Companies Actually Structure Pay: The Hidden System Behind Your Salary</a></h3>
+                <p class="article-description">Understand the secret paygrade system companies use. Learn about salary bands, bell curves, and why you're probably hired below the midpoint.</p>
+                <div class="article-meta">
+                    <span class="article-tag" data-tag="salary">Salary Strategies</span>
+                    <span class="article-tag" data-tag="negotiation">Negotiation Tactics</span>
+                    <span class="article-tag" data-tag="career">Career Growth</span>
+                    <a href="./articles/article-how-companies-structure-pay.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+
+            <!-- Article 3 -->
+            <div class="article-item" data-tags="salary negotiation career-strategy" data-keywords="market research salary data glassdoor levels triangulation">
+                <h3><a href="./articles/article-research-your-worth.html">The Three Ways to Research Your Worth: Turn Feelings into Data</a></h3>
+                <p class="article-description">Learn the three proven methods to research your market value. Use online data, competitor interviews, and company research to find your number.</p>
+                <div class="article-meta">
+                    <span class="article-tag" data-tag="salary">Salary Strategies</span>
+                    <span class="article-tag" data-tag="negotiation">Negotiation Tactics</span>
+                    <span class="article-tag" data-tag="career">Career Growth</span>
+                    <a href="./articles/article-research-your-worth.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+
+            <!-- Article 4 -->
+            <div class="article-item" data-tags="salary negotiation career-strategy" data-keywords="calculate market value floor target ceiling framework">
+                <h3><a href="./articles/article-calculate-market-value.html">Calculating Your Market Value: The Framework That Turns Data Into Numbers</a></h3>
+                <p class="article-description">Turn your research into three concrete numbers: Floor, Target, and Ceiling. Learn the calculation framework that gives you negotiation confidence.</p>
+                <div class="article-meta">
+                    <span class="article-tag" data-tag="salary">Salary Strategies</span>
+                    <span class="article-tag" data-tag="negotiation">Negotiation Tactics</span>
+                    <span class="article-tag" data-tag="career">Career Growth</span>
+                    <a href="./articles/article-calculate-market-value.html" class="read-more">Read More →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="noResults" style="display: none;">
+            <p>No articles found matching your search. Try different keywords or filters.</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2>Secure Your Dream Job & Maximize Your Compensation</h2>
+                <div class="footer-ctas">
+                    <a href="contact.html" class="cta-primary">Work with Ivan</a>
+                    <a href="contact.html" class="cta-secondary">Or contact me <span class="arrow">»</span></a>
+                </div>
+            </div>
+
+            <div class="footer-center">
+                <div class="footer-nav-item"><a href="courses.html">Courses</a></div>
+                <div class="footer-nav-item"><a href="blog.html">Articles</a></div>
+                <div class="footer-nav-item"><a href="contact.html">Contact</a></div>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-nav-item"><a href="about.html">About</a></div>
+                <div class="footer-nav-item"><a href="contact.html">Work with Ivan</a></div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© Ivan Piatouski. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const articlesList = document.getElementById('articlesList');
+        const articles = document.querySelectorAll('.article-item');
+        const noResults = document.getElementById('noResults');
+        const tags = document.querySelectorAll('.article-tag');
+
+        let activeTag = 'all';
+        let searchQuery = '';
+
+        // Filter by tag
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeTag = btn.getAttribute('data-tag');
+                filterArticles();
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('keyup', (e) => {
+            searchQuery = e.target.value.toLowerCase();
+            filterArticles();
+        });
+
+        // Tag click filtering
+        tags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                const tag_value = tag.getAttribute('data-tag');
+                filterBtns.forEach(btn => btn.classList.remove('active'));
+                const targetBtn = Array.from(filterBtns).find(btn => btn.getAttribute('data-tag') === tag_value);
+                if (targetBtn) {
+                    targetBtn.classList.add('active');
+                    activeTag = tag_value;
+                    filterArticles();
+                }
+            });
+        });
+
+        function filterArticles() {
+            let visibleCount = 0;
+
+            articles.forEach(article => {
+                const tags = article.getAttribute('data-tags').split(' ');
+                const keywords = article.getAttribute('data-keywords') || '';
+                
+                // Check tag filter
+                const matchesTag = activeTag === 'all' || tags.includes(activeTag);
+                
+                // Check search query
+                const articleText = article.textContent.toLowerCase();
+                const matchesSearch = searchQuery === '' || articleText.includes(searchQuery);
+                
+                // Show/hide article
+                if (matchesTag && matchesSearch) {
+                    article.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    article.style.display = 'none';
+                }
+            });
+
+            // Show no results message
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

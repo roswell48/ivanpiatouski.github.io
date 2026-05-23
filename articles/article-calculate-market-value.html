@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculating Your Market Value - Ivan Piatouski</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1000;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #333;
+            display: inline-block;
+            height: 50px;
+        }
+
+        .logo-img {
+            height: 100%;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: #0066cc;
+        }
+
+        nav li:last-child a {
+            background: #0066cc;
+            color: white !important;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem 3rem 2rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .article-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .article-meta {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .article-meta span {
+            margin-right: 1rem;
+        }
+
+        .article-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #333;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .tag:hover {
+            background: #0066cc;
+            color: white;
+        }
+
+        /* Article Content */
+        .article-content {
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        .article-content h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            color: #444;
+        }
+
+        .article-content strong {
+            color: #0066cc;
+            font-weight: 600;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.8rem;
+            color: #444;
+        }
+
+        .highlight-box {
+            background: #f9f9f9;
+            border-left: 4px solid #0066cc;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .data-example {
+            background: #f0f7ff;
+            border: 1px solid #0066cc;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            overflow-x: auto;
+        }
+
+        .three-numbers {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .number-box {
+            background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
+            border: 2px solid #ddd;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .number-box.floor {
+            border-color: #e74c3c;
+            background: linear-gradient(135deg, #fee 0%, #fdd 100%);
+        }
+
+        .number-box.target {
+            border-color: #27ae60;
+            background: linear-gradient(135deg, #efe 0%, #dfd 100%);
+        }
+
+        .number-box.ceiling {
+            border-color: #3498db;
+            background: linear-gradient(135deg, #eef 0%, #ddf 100%);
+        }
+
+        .number-box h3 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .number-box .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .number-box p {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        /* Article Footer */
+        .article-footer {
+            border-top: 2px solid #e0e0e0;
+            padding-top: 2rem;
+            margin-top: 3rem;
+        }
+
+        .related-articles {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .related-articles h4 {
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        .related-article-link {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .related-article-link:hover {
+            text-decoration: underline;
+        }
+
+        .related-article-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .author-bio {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .author-bio h4 {
+            margin-bottom: 0.5rem;
+            color: #222;
+        }
+
+        .author-bio p {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .article-cta {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .article-cta h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-cta p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            background: white;
+            color: #0066cc;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .cta-button:hover {
+            background: #f0f0f0;
+            color: #0052a3;
+        }
+
+        /* Footer */
+        footer {
+            background: #2a2a2a;
+            color: white;
+            padding: 4rem 0;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-left h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-ctas {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-ctas a {
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .footer-ctas a.cta-primary {
+            background: #0066cc;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .footer-ctas a.cta-primary:hover {
+            background: #0052a3;
+        }
+
+        .footer-ctas a.cta-secondary {
+            color: #999;
+            font-size: 0.95rem;
+        }
+
+        .footer-ctas a.cta-secondary:hover {
+            color: #0066cc;
+        }
+
+        .footer-center h3, .footer-right h3 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-nav-item {
+            margin-bottom: 1rem;
+        }
+
+        .footer-nav-item a {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-nav-item a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .article-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .article-content h2 {
+                font-size: 1.4rem;
+                margin-top: 2rem;
+            }
+
+            .three-numbers {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="../index.html" class="logo"><img src="../images/logo.svg" alt="Ivan" class="logo-img"></a>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">About</a></li>
+                    <li><a href="../courses.html">Courses</a></li>
+                    <li><a href="../blog.html" class="active">Articles</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                    <li><a href="../contact.html">Work with Ivan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <article>
+            <header class="article-header">
+                <h1>Calculating Your Market Value: The Framework That Turns Data Into Numbers</h1>
+                <p class="article-meta">
+                    <span class="author">Ivan Piatouski</span> • 
+                    <span class="date">May 21, 2026</span> • 
+                    <span class="reading-time">11 min read</span>
+                </p>
+                <div class="article-tags">
+                    <span class="tag">Market Value</span>
+                    <span class="tag">Salary Negotiation</span>
+                    <span class="tag">Data Analysis</span>
+                    <span class="tag">Career Strategy</span>
+                </div>
+            </header>
+
+            <section class="article-content">
+                <h2>From Data to Decision</h2>
+                
+                <p>You've done the research. You have data from online sites, competitor interviews, and your company's pay structure. But now you're staring at a pile of numbers:</p>
+                
+                <p>Glassdoor says $85k. Levels.fyi says $92k. Your friend says $90k. Your company's range says $80-92k. You're currently at $70k. So what's your actual market value?</p>
+                
+                <p><strong>That's not a guess. That's a calculation.</strong> And it's simpler than you think.</p>
+
+                <h2>Step 1: Organize Your Data</h2>
+                
+                <p>Before calculating anything, organize. Create three columns: Source, Number, Notes. Write down every data point from your research. Here's what it might look like:</p>
+
+                <div class="data-example">
+                <strong>ONLINE RESEARCH:</strong><br>
+                Glassdoor: $88k<br>
+                Levels.fyi: $95k<br>
+                Salary.com: $85k<br>
+                LinkedIn Salary: $89k<br>
+                <br>
+                <strong>COMPETITOR INTERVIEWS:</strong><br>
+                Company A: $90-100k range<br>
+                Company B: $92k typical<br>
+                Startup: $85-95k range<br>
+                <br>
+                <strong>INTRA-COMPANY:</strong><br>
+                Peer 1: $82k<br>
+                Peer 2: $88k<br>
+                Company Glassdoor posts: $80-92k range
+                </div>
+
+                <p>You've got roughly 11 data points (some ranges, some specific). Your job is to turn this into one number.</p>
+
+                <h2>Step 2: Convert Ranges to Midpoints</h2>
+                
+                <p>You can't work with ranges. Convert them to midpoints first.</p>
+                
+                <p>If someone said "$90k-$100k," the midpoint is $95k. If Glassdoor shows "$85k-$92k," the midpoint is $88,500.</p>
+                
+                <p>Convert everything to single numbers:</p>
+
+                <div class="data-example">
+                $88k, $95k, $85k, $89k, $95k, $92k, $90k, $82k, $88k, $88.5k
+                </div>
+
+                <p>Much better. Now you have 10 concrete numbers instead of ranges.</p>
+
+                <h2>Step 3: Order Lowest to Highest</h2>
+                
+                <p>List your numbers from lowest to highest:</p>
+
+                <div class="data-example">
+                $82k, $85k, $88k, $88k, $88.5k, $89k, $90k, $92k, $95k, $95k
+                </div>
+
+                <p><strong>What number appears most or sits in the middle?</strong></p>
+                
+                <p>Here, $88k appears twice. The middle clusters around $88-92k. Your median is approximately <strong>$90k.</strong></p>
+                
+                <p><strong>That's your market value.</strong> Whether you use weighted formulas or just look at the middle, you'll land in the same ballpark. The exact number matters less than confidence in the range.</p>
+
+                <h2>Step 4: Identify Outliers</h2>
+                
+                <p>Before you lock in, identify outliers. An outlier is a data point way out of range.</p>
+                
+                <div class="highlight-box">
+                    <strong>Rule:</strong> If a data point is 20% higher or lower than the median, investigate before including it.
+                </div>
+                
+                <p>If your median is $90k:</p>
+                
+                <ul>
+                    <li>20% higher = $108k (suspicious)</li>
+                    <li>20% lower = $72k (suspicious)</li>
+                </ul>
+                
+                <p>If someone says "$115k," ask why. Different role? Company? Seniority level? Outliers should either be removed or noted separately. In our example, the $82k (one peer) might be below market, and the $95k (Levels.fyi) might be high-end tech. Keep them, but acknowledge they're edges.</p>
+
+                <h2>Step 5: Create Your Three Numbers</h2>
+                
+                <p>Here's the critical insight: <strong>You don't have one market value. You have three.</strong></p>
+
+                <div class="three-numbers">
+                    <div class="number-box floor">
+                        <h3>Floor</h3>
+                        <div class="value">$80k</div>
+                        <p>Current salary + 10-15%. Your walk-away number. Below this, stay put or look elsewhere.</p>
+                    </div>
+                    <div class="number-box target">
+                        <h3>Target</h3>
+                        <div class="value">$90k</div>
+                        <p>Your market value. What you ask for. Where everything points based on your data.</p>
+                    </div>
+                    <div class="number-box ceiling">
+                        <h3>Ceiling</h3>
+                        <div class="value">$98k</div>
+                        <p>Your realistic high. Usually 75th percentile. Companies push below target—you need a limit.</p>
+                    </div>
+                </div>
+
+                <p><strong>Why three numbers?</strong> Companies will try to push you below your target. You need to know how far you'll go before you say no.</p>
+                
+                <p>Using the example above:</p>
+                
+                <ul>
+                    <li><strong>Floor:</strong> $80k (below market, but you won't go lower)</li>
+                    <li><strong>Target:</strong> $90k (your market number)</li>
+                    <li><strong>Ceiling:</strong> $98k (realistic high-end)</li>
+                </ul>
+                
+                <p>This gives you $18k of negotiation room. Even if you land at $88k, you've made progress. At $95k, you're thrilled.</p>
+
+                <h2>Step 6: Adjust for Your Situation</h2>
+                
+                <p>Market value assumes you're "average." But you're not.</p>
+                
+                <p>Your situation shifts these numbers 5-10% up or down:</p>
+                
+                <ul>
+                    <li><strong>More experience</strong> → push numbers up</li>
+                    <li><strong>Less experience</strong> → push numbers down</li>
+                    <li><strong>Specialized skills</strong> → push numbers up</li>
+                    <li><strong>Career gaps</strong> → slight push down</li>
+                    <li><strong>Strong track record</strong> → push numbers up</li>
+                    <li><strong>Career-changer from lower-paying field</strong> → adjust ceiling down</li>
+                </ul>
+                
+                <p>Data gives the framework. Your situation adjusts it slightly, not dramatically.</p>
+                
+                <p>Example adjustments:</p>
+                
+                <ul>
+                    <li>Six years instead of five? Move target from $90k to $92-93k.</li>
+                    <li>Specialized certification? Move from $90k to $95k.</li>
+                    <li>Coming from nonprofit at $65k? Keep target at $90k but maybe ceiling at $95k instead of $98k.</li>
+                </ul>
+
+                <h2>Step 7: Test Your Numbers</h2>
+                
+                <p>Before using your numbers, test them for sanity.</p>
+                
+                <p><strong>Do they feel real?</strong> If your target is $90k and all your data said $85k-$95k, that's real. If your target is $90k but your data said $75k-$80k, something's wrong. Go back and recheck.</p>
+                
+                <p><strong>Can you defend them?</strong> If someone asks "Why $90k?" you should answer:</p>
+                
+                <blockquote style="background: #f0f7ff; border-left: 4px solid #0066cc; padding: 1rem; margin: 1.5rem 0; color: #444;">
+                    "Software Engineers with my experience in this market make $88k-$92k. I researched online salary sites, talked to peers at other companies, and looked at competitor compensation. $90k is in the middle of that data."
+                </blockquote>
+                
+                <p>That's defensible. "I feel I deserve it" or "My friend makes that" is not. You need data.</p>
+                
+                <p>If your numbers don't pass the defensibility test, adjust them.</p>
+
+                <h2>Step 8: Document Your Calculation</h2>
+                
+                <p>Most people calculate, then forget where the number came from. Three weeks into negotiation, they second-guess themselves.</p>
+                
+                <p>Create a one-page document and keep it somewhere visible:</p>
+
+                <div class="data-example">
+                <strong>MY MARKET VALUE CALCULATION</strong><br>
+                <br>
+                <strong>Data sources:</strong><br>
+                Glassdoor: $88k<br>
+                Levels.fyi: $95k<br>
+                Salary.com: $85k<br>
+                LinkedIn: $89k<br>
+                Competitor interviews: $90-100k<br>
+                Internal peers: $82-88k<br>
+                <br>
+                <strong>Median: $90,000</strong><br>
+                <strong>Market range: $88,000-$92,000</strong><br>
+                <br>
+                <strong>My Numbers:</strong><br>
+                Floor: $80,000<br>
+                Target: $90,000<br>
+                Ceiling: $98,000<br>
+                <br>
+                <strong>Rationale:</strong><br>
+                My research across three methods (online data, competitor interviews, internal peer data) consistently pointed to $88-92k for my role and experience level. I'm using $90k as my target.
+                </div>
+
+                <p>Print it. Keep it on your desk. When doubt creeps in (and it will), look at it and remember: <strong>I have data for this. This is real.</strong></p>
+
+                <h2>You're Ready</h2>
+                
+                <p>You came in with uncertainty. Now you have:</p>
+                
+                <ul>
+                    <li>✓ Understanding of how salary systems work</li>
+                    <li>✓ Three methods to research the market</li>
+                    <li>✓ A framework to synthesize messy data</li>
+                    <li>✓ Three concrete numbers (floor, target, ceiling)</li>
+                    <li>✓ Documentation to back it up</li>
+                </ul>
+                
+                <p><strong>You're not guessing anymore. You know your market value.</strong></p>
+
+            </section>
+
+            <footer class="article-footer">
+                <div class="related-articles">
+                    <h4>Complete Your Research Journey</h4>
+                    <p class="related-article-desc">Read the other articles in this series to fully master salary negotiation:</p>
+                    <a href="./article-why-underpaid.html" class="related-article-link">→ Why You're Probably Underpaid (And What To Do About It)</a>
+                    <a href="./article-how-companies-structure-pay.html" class="related-article-link">→ How Companies Actually Structure Pay</a>
+                    <a href="./article-research-your-worth.html" class="related-article-link">→ The Three Ways to Research Your Worth</a>
+                </div>
+                
+                <div class="author-bio">
+                    <h4>About Ivan Piatouski</h4>
+                    <p>Career coach and salary negotiation specialist helping professionals understand compensation systems and negotiate with confidence. Founder of comprehensive courses on negotiation, interviews, and career strategy.</p>
+                </div>
+                <div class="article-cta">
+                    <h4>Ready to Know Your Worth and Negotiate It?</h4>
+                    <p>Let's work together to maximize your compensation and land the role you deserve.</p>
+                    <a href="../contact.html" class="cta-button">Get Started Today</a>
+                </div>
+            </footer>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2>Secure Your Dream Job & Maximize Your Compensation</h2>
+                <div class="footer-ctas">
+                    <a href="../contact.html" class="cta-primary">Work with Ivan</a>
+                    <a href="../contact.html" class="cta-secondary">Or contact me <span class="arrow">»</span></a>
+                </div>
+            </div>
+
+            <div class="footer-center">
+                <h3>Explore</h3>
+                <div class="footer-nav-item"><a href="../courses.html">Courses</a></div>
+                <div class="footer-nav-item"><a href="../blog.html">Articles</a></div>
+                <div class="footer-nav-item"><a href="../contact.html">Contact</a></div>
+            </div>
+
+            <div class="footer-right">
+                <h3>Learn More</h3>
+                <div class="footer-nav-item"><a href="../index.html">About</a></div>
+                <div class="footer-nav-item"><a href="../contact.html">Work with Ivan</a></div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© Ivan Piatouski. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

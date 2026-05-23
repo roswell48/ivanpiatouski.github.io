@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Ivan - Career Coach</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1000;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #333;
+            display: inline-block;
+            height: 50px;
+        }
+
+        .logo-img {
+            height: 100%;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: #0066cc;
+        }
+
+        nav a.active {
+            color: #0066cc;
+        }
+
+        nav li:last-child a {
+            background: #0066cc;
+            color: white !important;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            transition: background 0.2s;
+        }
+
+        nav li:last-child a:hover {
+            background: #0052a3;
+            color: white;
+        }
+
+        /* Main */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 3rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .content-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .content-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .content-section p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .content-section ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .content-section li {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #666;
+        }
+
+        .content-section li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #0066cc;
+            font-weight: bold;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #0066cc;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .cta-button:hover {
+            background: #0052a3;
+        }
+
+        /* Footer */
+        footer {
+            background: #2a2a2a;
+            color: white;
+            padding: 4rem 0;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .footer-left {
+            grid-column: 1;
+        }
+
+        .footer-left h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .footer-ctas {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-ctas a {
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .footer-ctas a.cta-primary {
+            background: #0066cc;
+            color: white;
+            padding: 0.875rem 1.75rem;
+            font-weight: 700;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .footer-ctas a.cta-primary:hover {
+            background: #0052a3;
+        }
+
+        .footer-ctas a.cta-secondary {
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+
+        .footer-ctas a.cta-secondary:hover {
+            color: #0066cc;
+        }
+
+        .footer-ctas .arrow {
+            color: #0066cc;
+            margin-left: 0.5rem;
+        }
+
+        .footer-center,
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-nav-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-nav-item a {
+            text-decoration: none;
+            color: white;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-nav-item a:hover {
+            color: #0066cc;
+        }
+
+        .footer-nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: #0066cc;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .footer-nav-item:hover::after {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            grid-column: 1 / -1;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-left h2 {
+                font-size: 1.3rem;
+            }
+
+            .footer-bottom {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo"><img src="./images/logo.svg" alt="Ivan" class="logo-img"></a>
+            <nav>
+                <ul>
+                    <li><a href="about.html" class="active">About</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="blog.html">Articles</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="contact.html">Work with Ivan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>About Ivan</h1>
+            <p>Learn my story and how I help professionals land better jobs and maximize compensation</p>
+        </section>
+
+        <!-- My Story Section -->
+        <section class="content-section">
+            <h2>My Story</h2>
+            <p>
+                I'm Ivan Piatouski, a career coach with over a decade of experience helping professionals at all levels 
+                land better jobs and negotiate higher compensation. Throughout my career, I've worked with hundreds of 
+                candidates—from early-career professionals to senior executives—helping them navigate the entire job search 
+                and negotiation process with confidence.
+            </p>
+            <p>
+                My passion is simple: ensuring people get paid what they're worth and land in roles that truly fit their 
+                career goals. I've seen firsthand how the right guidance can transform careers and unlock financial potential 
+                that many professionals didn't even know was possible.
+            </p>
+        </section>
+
+        <!-- Expertise Section -->
+        <section class="content-section">
+            <h2>My Expertise</h2>
+            <ul>
+                <li>Salary negotiation tactics proven to work with Fortune 500 companies and startups</li>
+                <li>Job search strategy that gets you multiple competing offers</li>
+                <li>Interview preparation and coaching for confidence and success</li>
+                <li>Compensation package evaluation and optimization</li>
+                <li>Negotiating raises, promotions, and improved working conditions</li>
+                <li>Executive compensation and equity negotiation</li>
+            </ul>
+        </section>
+
+        <!-- Philosophy Section -->
+        <section class="content-section">
+            <h2>My Philosophy</h2>
+            <p>
+                Negotiation isn't about being aggressive or difficult—it's about clearly communicating your value and 
+                working collaboratively toward mutually beneficial outcomes. I teach ethical, relationship-preserving 
+                negotiation tactics that strengthen your professional relationships while securing better deals.
+            </p>
+            <p>
+                I believe every professional deserves access to expert guidance on career decisions. Whether you're just 
+                starting out or leading a team, you should have the knowledge and tools to advocate for yourself effectively.
+            </p>
+        </section>
+
+        <!-- Why Work With Me Section -->
+        <section class="content-section">
+            <h2>Why Work With Me</h2>
+            <ul>
+                <li>Personalized coaching tailored to your unique situation and goals</li>
+                <li>Proven strategies refined through years of real-world negotiations</li>
+                <li>Direct access to expertise—no cookie-cutter templates</li>
+                <li>Collaborative approach that respects your instincts and values</li>
+                <li>Results-focused mindset with measurable outcomes</li>
+                <li>Ongoing support through your negotiation process</li>
+            </ul>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Ready to Work Together?</h2>
+            <p style="margin-bottom: 1.5rem; color: #666;">
+                Let's discuss how I can help you achieve your career goals and maximize your compensation.
+            </p>
+            <a href="contact.html" class="cta-button">Contact Me Today</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2>Secure Your Dream Job & Maximize Your Compensation</h2>
+                <div class="footer-ctas">
+                    <a href="contact.html" class="cta-primary">Work with Ivan</a>
+                    <a href="contact.html" class="cta-secondary">Or contact me <span class="arrow">»</span></a>
+                </div>
+            </div>
+
+            <div class="footer-center">
+                <div class="footer-nav-item"><a href="courses.html">Courses</a></div>
+                <div class="footer-nav-item"><a href="blog.html">Articles</a></div>
+                <div class="footer-nav-item"><a href="contact.html">Contact</a></div>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-nav-item"><a href="about.html">About</a></div>
+                <div class="footer-nav-item"><a href="contact.html">Work with Ivan</a></div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© Ivan Piatouski. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Handle About link behavior for scrolling on index page
+        const aboutLinks = document.querySelectorAll('a[href="about.html"]');
+        
+        aboutLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Check if we're on the index/home page
+                if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
+                    e.preventDefault();
+                    const aboutSection = document.getElementById('about-section');
+                    if (aboutSection) {
+                        aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+                // If on other pages, let the link navigate normally to about.html
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ivan - Career Coach</title>
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1000;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #333;
+            display: inline-block;
+            height: 50px;
+        }
+
+        .logo-img {
+            height: 100%;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: #0066cc;
+        }
+
+        nav li:last-child a {
+            background: #0066cc;
+            color: white !important;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            transition: background 0.2s;
+        }
+
+        nav li:last-child a:hover {
+            background: #0052a3;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: #2a2a2a;
+            color: white;
+            padding: 4rem 0;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+            grid-template-areas: 
+                "left center right"
+                "newsletter center right";
+        }
+        
+        .footer-left {
+            grid-area: left;
+        }
+        
+        .footer-center {
+            grid-area: center;
+        }
+        
+        .footer-right {
+            grid-area: right;
+        }
+        
+        .footer-newsletter-wrapper {
+            grid-area: newsletter;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        /* Newsletter Signup */
+        #mc_embed_signup {
+            background: transparent !important;
+            clear: none !important;
+            font: 14px Helvetica, Arial, sans-serif !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+        }
+
+        #mc_embed_signup h2 {
+            display: none !important;
+        }
+
+        #mc_embed_signup .indicates-required {
+            display: none !important;
+        }
+
+        #mc_embed_signup .mc-field-group {
+            display: none !important;
+        }
+
+        #mc_embed_signup label {
+            display: none !important;
+        }
+
+        #mc_embed_signup input {
+            box-sizing: border-box !important;
+        }
+
+        #mc_embed_signup input:focus {
+            outline: none !important;
+        }
+
+        #mc_embed_signup .clear {
+            margin: 0 !important;
+        }
+
+        #mc_embed_signup .button {
+            border: none !important;
+            transition: background 0.2s !important;
+            padding: 0 !important;
+        }
+
+        #mc_embed_signup .button:hover {
+            background: #0052a3 !important;
+        }
+
+        #mc_embed_signup p {
+            display: none !important;
+        }
+
+        #mc_embed_signup .response {
+            margin-top: 0.5rem !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+        }
+
+        #mce-success-response {
+            background: transparent !important;
+            color: #d4edda !important;
+            border: none !important;
+        }
+
+        #mce-error-response {
+            background: transparent !important;
+            color: #f8d7da !important;
+            border: none !important;
+        }
+
+        .footer-newsletter {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        .footer-newsletter-field {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0;
+        }
+
+        .footer-newsletter-field input {
+            flex: 1;
+            padding: 0.6rem !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            border-radius: 4px !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+            font-size: 0.85rem !important;
+        }
+
+        .footer-newsletter-field input::placeholder {
+            color: rgba(255, 255, 255, 0.6) !important;
+            font-style: italic !important;
+        }
+
+        .footer-newsletter-field input:focus {
+            border-color: #0066cc !important;
+            background: rgba(255, 255, 255, 0.15) !important;
+        }
+
+        .footer-newsletter-submit {
+            display: none;
+        }
+
+        .footer-newsletter-btn {
+            background: #0066cc !important;
+            color: white !important;
+            border: none !important;
+            padding: 0.6rem 0.8rem !important;
+            border-radius: 4px !important;
+            cursor: pointer !important;
+            font-weight: 700 !important;
+            font-size: 1rem !important;
+            transition: background 0.2s !important;
+            width: auto !important;
+        }
+
+        .footer-newsletter-btn:hover {
+            background: #0052a3 !important;
+        }
+
+        .footer-newsletter-disclaimer {
+            font-size: 0.8rem !important;
+            color: rgba(255, 255, 255, 0.6) !important;
+            margin-top: 0.5rem !important;
+            margin-bottom: 0 !important;
+            display: block !important;
+        }
+
+        #mc_embed_signup .footer-newsletter-disclaimer {
+            display: block !important;
+        }
+
+        .footer-left {
+            grid-column: 1;
+        }
+
+        .footer-left h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .footer-ctas {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-ctas a {
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .footer-ctas a.cta-primary {
+            background: #0066cc;
+            color: white;
+            padding: 0.875rem 1.75rem;
+            font-weight: 700;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .footer-ctas a.cta-primary:hover {
+            background: #0052a3;
+        }
+
+        .footer-ctas a.cta-secondary {
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+
+        .footer-ctas a.cta-secondary:hover {
+            color: #0066cc;
+        }
+
+        .footer-ctas .arrow {
+            color: #0066cc;
+            margin-left: 0.5rem;
+        }
+
+        .footer-center,
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-nav-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-nav-item a {
+            text-decoration: none;
+            color: white;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-nav-item a:hover {
+            color: #0066cc;
+        }
+
+        .footer-nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: #0066cc;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .footer-nav-item:hover::after {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            grid-column: 1 / -1;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-left h2 {
+                font-size: 1.3rem;
+            }
+
+            .footer-bottom {
+                grid-column: 1;
+            }
+        }
+
+        /* Main */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .hero-subheading {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 8px;
+            display: block;
+            background: #f5f5f5;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+
+        /* Divider */
+        hr {
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            margin: 3rem 0;
+        }
+
+        /* About Section */
+        .about {
+            padding: 3rem 0;
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .about-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 8px;
+            background: #f5f5f5;
+            object-fit: cover;
+        }
+
+        .about-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .about-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 3rem 0;
+        }
+
+        .benefits h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .benefits-list {
+            list-style: none;
+        }
+
+        .benefits-list li {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .benefits-list li:last-child {
+            border-bottom: none;
+        }
+
+        .benefits-list strong {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .benefits-list p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Companies Section */
+        .companies {
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .companies h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            align-items: center;
+            justify-items: center;
+        }
+
+        .company-logo {
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 3rem 0;
+        }
+
+        .testimonials h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .testimonial-slider {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .testimonial-card.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .testimonial-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: #ddd;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        .testimonial-name {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonial-name a {
+            color: #0066cc;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .testimonial-name a:hover {
+            color: #0052a3;
+            text-decoration: underline;
+        }
+
+        .testimonial-title {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-text {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 0;
+        }
+
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            align-items: center;
+        }
+
+        .testimonial-btn {
+            background: #f0f0f0;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .testimonial-btn:hover {
+            background: #0066cc;
+            color: white;
+        }
+
+        .testimonial-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .testimonial-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .testimonial-dot.active {
+            background: #0066cc;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #0066cc;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .cta-button:hover {
+            background: #0052a3;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero {
+                padding: 3rem 0;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .about {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .about-image {
+                width: 100%;
+                height: 200px;
+            }
+
+            .hero-subheading {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            nav ul {
+                gap: 0.5rem;
+                font-size: 0.85rem;
+            }
+
+            main {
+                padding: 0 1rem;
+            }
+
+            .cta-button {
+                display: block;
+                padding: 0.75rem 1.5rem;
+            }
+
+            .testimonial-avatar {
+                width: 75px;
+                height: 75px;
+                box-sizing: border-box;
+            }
+
+            .testimonial-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo"><img src="./images/logo.svg" alt="Ivan" class="logo-img"></a>
+            <nav>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="blog.html">Articles</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="contact.html">Work with Ivan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Secure Your Dream Job & Maximize Your Compensation</h1>
+            <p class="hero-subheading">Expert career coaching to land top offers and negotiate the best possible rates</p>
+            <img src="./images/hero-image.jpg" alt="Career Success" class="hero-image">
+        </section>
+
+        <hr>
+
+        <!-- About Section -->
+        <section class="about" id="about-section">
+            <img src="./images/ivan-headshot.jpg" alt="Ivan" class="about-image">
+            <div class="about-content">
+                <h2>Proven Expertise You Can Trust</h2>
+                <p>
+                    I'm Ivan, a career coach with over a decade of experience helping professionals at all levels 
+                    land better jobs and negotiate higher compensation packages. I've worked with candidates from 
+                    startups to Fortune 500 companies, helping them navigate the entire job search process with confidence.
+                </p>
+                <p>
+                    My goal is simple: ensure you get paid what you're worth and land in a role that truly fits your career goals.
+                </p>
+            </div>
+        </section>
+
+        <hr>
+
+        <!-- Benefits Section -->
+        <section class="benefits">
+            <h2>How I Help You</h2>
+            <ul class="benefits-list">
+                <li>
+                    <strong>Land Better Jobs</strong>
+                    <p>Develop a targeted job search strategy that gets you in front of the right companies and hiring managers.</p>
+                </li>
+                <li>
+                    <strong>Negotiate Confidently</strong>
+                    <p>Learn proven negotiation tactics that help you secure better offers without damaging relationships.</p>
+                </li>
+                <li>
+                    <strong>Maximize Your Package</strong>
+                    <p>Go beyond salary—optimize your entire compensation package including equity, benefits, and flexibility.</p>
+                </li>
+                <li>
+                    <strong>Build Lasting Relationships</strong>
+                    <p>Negotiate in a way that strengthens your professional reputation and sets you up for future success.</p>
+                </li>
+            </ul>
+        </section>
+
+        <hr>
+
+        <!-- Companies Section -->
+        <section class="companies">
+            <h2>Companies I've Helped Negotiate With</h2>
+            <div class="companies-grid">
+                <div class="company-logo">Amazon</div>
+                <div class="company-logo">Welltech</div>
+                <div class="company-logo">Codeway</div>
+                <div class="company-logo">Meta</div>
+                <div class="company-logo">Epam</div>
+                <div class="company-logo">Liberty Global</div>
+                <div class="company-logo">Allegro</div>
+                <div class="company-logo">Temu</div>
+            </div>
+        </section>
+
+        <hr>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <h2>What My Clients Say</h2>
+            <div class="testimonial-slider">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card active">
+                    <img src="./images/maksym-avatar.jpg" alt="Maksym Mirodan" class="testimonial-avatar">
+                    <h3 class="testimonial-name"><a href="https://www.linkedin.com/in/maksym-mirodan-92b0a8254/" target="_blank">Maksym Mirodan</a></h3>
+                    <p class="testimonial-title">Senior Motion Designer, Spain</p>
+                    <p class="testimonial-text">"Ivan optimized my LinkedIn and CV, and I started getting HR outreach almost immediately. He prepared me end-to-end for interviews with clear strategies and a technical script that actually held up in real technical rounds. Most importantly, his negotiation guidance helped me secure a 25% better offer, including improved equity and benefits."</p>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <img src="./images/carlos-avatar.jpeg" alt="Carlos Ferreira" class="testimonial-avatar">
+                    <h3 class="testimonial-name"><a href="https://www.linkedin.com/in/carlosemaferreira/" target="_blank">Carlos Ferreira</a></h3>
+                    <p class="testimonial-title">Creative Content Lead, Spain</p>
+                    <p class="testimonial-text">"Ivan helped me reposition my LinkedIn and CV around the real business impact of my creative and performance marketing work. In less than 2 weeks, I landed a new role with a 45% salary increase. His interview prep and negotiation guidance made a huge difference throughout the process. HIGHLY RECOMMEND WORKING WITH HIS TEAM!"</p>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <img src="./images/sean-avatar.jpeg" alt="Sean Halliday" class="testimonial-avatar">
+                    <h3 class="testimonial-name"><a href="https://www.linkedin.com/in/sean-h-62a922119/" target="_blank">Sean Halliday</a></h3>
+                    <p class="testimonial-title">Marketing Director, New Castle</p>
+                    <p class="testimonial-text">"Mr. Piatouski helped me completely rework how I position my services as a contractor, especially the way I present value to clients. That shift alone allowed me to double my day rate and start closing much stronger commercial deals. He also helped me tighten up my business proposals so they land with decision-makers. Cheers!"</p>
+                </div>
+                <!-- Controls -->
+                <div class="testimonial-controls">
+                    <button class="testimonial-btn" id="prevBtn" onclick="changeTestimonial(-1)">‹</button>
+                    <div class="testimonial-dots">
+                        <span class="testimonial-dot active" onclick="currentTestimonial(0)"></span>
+                        <span class="testimonial-dot" onclick="currentTestimonial(1)"></span>
+                        <span class="testimonial-dot" onclick="currentTestimonial(2)"></span>
+                    </div>
+                    <button class="testimonial-btn" id="nextBtn" onclick="changeTestimonial(1)">›</button>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <h2>Ready to Get Paid What You're Worth?</h2>
+            <a href="contact.html" class="cta-button">Contact me today</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2>Secure Your Dream Job & Maximize Your Compensation</h2>
+                <div class="footer-ctas">
+                    <a href="contact.html" class="cta-primary">Work with Ivan</a>
+                    <a href="contact.html" class="cta-secondary">Or contact me <span class="arrow">»</span></a>
+                </div>
+            </div>
+
+            <div class="footer-center">
+                <div class="footer-nav-item"><a href="courses.html">Courses</a></div>
+                <div class="footer-nav-item"><a href="blog.html">Articles</a></div>
+                <div class="footer-nav-item"><a href="contact.html">Contact</a></div>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-nav-item"><a href="about.html">About</a></div>
+                <div class="footer-nav-item"><a href="contact.html">Work with Ivan</a></div>
+            </div>
+            
+            <!-- Newsletter Signup -->
+            <div class="footer-newsletter-wrapper">
+                <div id="mc_embed_signup" class="footer-newsletter">
+                    <form action="https://gmail.us5.list-manage.com/subscribe/post?u=418bc29e2c068161e7e762396&amp;id=bf47500b30&amp;f_id=008cc0e1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                        <div id="mc_embed_signup_scroll">
+                            <div id="mce-responses">
+                                <div class="response" id="mce-error-response" style="display: none;"></div>
+                                <div class="response" id="mce-success-response" style="display: none;"></div>
+                            </div>
+                            <div aria-hidden="true" style="position: absolute; left: -5000px;">
+                                <input type="text" name="b_418bc29e2c068161e7e762396_bf47500b30" tabindex="-1" value="">
+                            </div>
+                            <div class="footer-newsletter-field">
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your@email.com" required>
+                                <input type="submit" value="→" name="subscribe" id="mc-embedded-subscribe" class="footer-newsletter-btn">
+                            </div>
+                            <p class="footer-newsletter-disclaimer">Subscribe for free career tips!</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© Ivan Piatouski. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Handle About link behavior
+    const aboutLinks = document.querySelectorAll('a[href="about.html"]');
+    
+    aboutLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Check if we're on the index/home page
+            if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
+                e.preventDefault();
+                const aboutSection = document.getElementById('about-section');
+                if (aboutSection) {
+                    aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+            // If on other pages, let the link navigate normally
+        });
+    });
+
+    // Mailchimp Form Validation
+    (function($) {
+        window.fnames = new Array();
+        window.ftypes = new Array();
+        fnames[0]='EMAIL';
+        ftypes[0]='email';
+    }(jQuery));
+    var $mcj = jQuery.noConflict(true);
+
+    // Testimonials Slider
+    let currentSlide = 0;
+    const testimonials = document.querySelectorAll('.testimonial-card');
+    const dots = document.querySelectorAll('.testimonial-dot');
+
+    function showTestimonial(n) {
+        testimonials.forEach(card => card.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        testimonials[n].classList.add('active');
+        dots[n].classList.add('active');
+        currentSlide = n;
+    }
+
+    function changeTestimonial(n) {
+        currentSlide += n;
+        if (currentSlide >= testimonials.length) {
+            currentSlide = 0;
+        } else if (currentSlide < 0) {
+            currentSlide = testimonials.length - 1;
+        }
+        showTestimonial(currentSlide);
+    }
+
+    function currentTestimonial(n) {
+        showTestimonial(n);
+    }
+
+    // Auto-scroll testimonials every 12 seconds
+    setInterval(() => {
+        changeTestimonial(1);
+    }, 12000);
+</script>
+<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
+</body>
+</html>

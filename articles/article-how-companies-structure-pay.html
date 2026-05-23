@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Companies Actually Structure Pay - Ivan Piatouski</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1000;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #333;
+            display: inline-block;
+            height: 50px;
+        }
+
+        .logo-img {
+            height: 100%;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: #0066cc;
+        }
+
+        nav li:last-child a {
+            background: #0066cc;
+            color: white !important;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem 3rem 2rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .article-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .article-meta {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .article-meta span {
+            margin-right: 1rem;
+        }
+
+        .article-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background: #f0f0f0;
+            color: #333;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .tag:hover {
+            background: #0066cc;
+            color: white;
+        }
+
+        /* Article Content */
+        .article-content {
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        .article-content h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            color: #444;
+        }
+
+        .article-content strong {
+            color: #0066cc;
+            font-weight: 600;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.8rem;
+            color: #444;
+        }
+
+        .highlight-box {
+            background: #f9f9f9;
+            border-left: 4px solid #0066cc;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .data-example {
+            background: #f0f7ff;
+            border: 1px solid #0066cc;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            overflow-x: auto;
+        }
+
+        .three-numbers {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .number-box {
+            background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
+            border: 2px solid #ddd;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .number-box.floor {
+            border-color: #e74c3c;
+            background: linear-gradient(135deg, #fee 0%, #fdd 100%);
+        }
+
+        .number-box.target {
+            border-color: #27ae60;
+            background: linear-gradient(135deg, #efe 0%, #dfd 100%);
+        }
+
+        .number-box.ceiling {
+            border-color: #3498db;
+            background: linear-gradient(135deg, #eef 0%, #ddf 100%);
+        }
+
+        .number-box h3 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .number-box .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .number-box p {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        /* Article Footer */
+        .article-footer {
+            border-top: 2px solid #e0e0e0;
+            padding-top: 2rem;
+            margin-top: 3rem;
+        }
+
+        .related-articles {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .related-articles h4 {
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        .related-article-link {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .related-article-link:hover {
+            text-decoration: underline;
+        }
+
+        .related-article-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .author-bio {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .author-bio h4 {
+            margin-bottom: 0.5rem;
+            color: #222;
+        }
+
+        .author-bio p {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .article-cta {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .article-cta h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-cta p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            background: white;
+            color: #0066cc;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .cta-button:hover {
+            background: #f0f0f0;
+            color: #0052a3;
+        }
+
+        /* Footer */
+        footer {
+            background: #2a2a2a;
+            color: white;
+            padding: 4rem 0;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-left h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-ctas {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-ctas a {
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .footer-ctas a.cta-primary {
+            background: #0066cc;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .footer-ctas a.cta-primary:hover {
+            background: #0052a3;
+        }
+
+        .footer-ctas a.cta-secondary {
+            color: #999;
+            font-size: 0.95rem;
+        }
+
+        .footer-ctas a.cta-secondary:hover {
+            color: #0066cc;
+        }
+
+        .footer-center h3, .footer-right h3 {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-nav-item {
+            margin-bottom: 1rem;
+        }
+
+        .footer-nav-item a {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-nav-item a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .article-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .article-content h2 {
+                font-size: 1.4rem;
+                margin-top: 2rem;
+            }
+
+            .three-numbers {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="../index.html" class="logo"><img src="../images/logo.svg" alt="Ivan" class="logo-img"></a>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">About</a></li>
+                    <li><a href="../courses.html">Courses</a></li>
+                    <li><a href="../blog.html" class="active">Articles</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                    <li><a href="../contact.html">Work with Ivan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <article>
+            <header class="article-header">
+                <h1>How Companies Actually Structure Pay: The Hidden System Behind Your Salary</h1>
+                <p class="article-meta">
+                    <span class="author">Ivan Piatouski</span> • 
+                    <span class="date">May 20, 2026</span> • 
+                    <span class="reading-time">10 min read</span>
+                </p>
+                <div class="article-tags">
+                    <span class="tag">Salary Negotiation</span>
+                    <span class="tag">Paygrades</span>
+                    <span class="tag">Compensation</span>
+                    <span class="tag">Career Strategy</span>
+                </div>
+            </header>
+
+            <section class="article-content">
+                <h2>Fear Thrives in Darkness</h2>
+                
+                <p>Here's the problem with salary negotiation: It doesn't have to be scary. Fear only survives because you don't understand how something works. Once you understand it, it becomes a puzzle you can solve.</p>
+                
+                <p>If you haven't already, <strong><a href="./article-why-underpaid.html" style="color: #0066cc; text-decoration: none; font-weight: 600;">read about how much fear is costing you</a></strong>. The average person leaves $500,000 to $1 million on the table. But right now, there's a massive puzzle you're not allowed to see.</p>
+
+                <h2>Why Companies Keep Pay Structure Secret</h2>
+                
+                <p>Has anyone at your company ever explained how they decide what to pay you? Probably not. This isn't an accident—<strong>most companies intentionally keep their pay structure secret.</strong></p>
+                
+                <p>Why? Three reasons:</p>
+                
+                <ol>
+                    <li><strong>If you don't know the range, you can't ask for more.</strong> You can't negotiate against information you don't have.</li>
+                    <li><strong>It keeps employees from comparing notes.</strong> If you don't know what your colleague makes, you won't demand equal pay.</li>
+                    <li><strong>It keeps raises small.</strong> Without understanding the system, you're grateful for whatever they offer.</li>
+                </ol>
+                
+                <p>Companies keep this secret. And employees stay scared, underpaid, and quiet. But you're about to learn what they don't want you to know.</p>
+
+                <h2>The Paygrade: The Core of the System</h2>
+                
+                <p>Here's what nobody tells you: <strong>Your job has a value. Not your performance—the job itself.</strong></p>
+                
+                <p>Companies assign salary ranges to job titles. A 'Junior Developer' might be worth $60,000-$80,000. An 'Engineer III' might be worth $85,000-$115,000. Each paygrade has three components:</p>
+                
+                <ul>
+                    <li><strong>A minimum</strong> (lowest they'll pay for that role)</li>
+                    <li><strong>A maximum</strong> (highest they'll pay for that role)</li>
+                    <li><strong>A midpoint</strong> (theoretically the "fair" salary for that role)</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>Here's what should blow your mind:</strong> Most companies don't want to pay you at the midpoint. They want to pay you <strong>below it.</strong>
+                </div>
+                
+                <p>Why? The math is simple. If they pay you at the 30th percentile (way below midpoint), they have 70% of the paygrade left for raises over your 20-year career. If they pay you at the midpoint, they only have 50% left. It's how the system is designed.</p>
+
+                <h2>Salary Bands and How They Overlap</h2>
+                
+                <p>Companies don't have just one paygrade. They have multiple paygrades stacked on top of each other—and they overlap.</p>
+
+                <div class="salary-example">
+                Paygrade E1 (Junior): $60,000 - $80,000<br>
+                Paygrade E2 (Mid):     $70,000 - $95,000<br>
+                Paygrade E3 (Senior):  $85,000 - $115,000
+                </div>
+                
+                <p>Notice something? E1 goes to $80,000. E2 starts at $70,000. <strong>Someone at the top of E1 makes more than someone at the bottom of E2.</strong></p>
+                
+                <p>This creates two important problems:</p>
+                
+                <ul>
+                    <li><strong>You can get promoted without getting a raise.</strong> If you're at $79,000 in E1 and promoted to E2 at $72,000, congratulations—you made less money.</li>
+                    <li><strong>If you're near the top of your paygrade, big raises become impossible.</strong> You're already in the overlapping zone.</li>
+                </ul>
+                
+                <p>This is why <strong>promotions are so valuable.</strong> A promotion usually comes with an 8-12% raise because you're moving to an entirely new paygrade with more room to grow. That's why staying in your current role and asking for raises is significantly less effective.</p>
+
+                <h2>The Bell Curve: The Real Limits on Your Raises</h2>
+                
+                <p>You probably think raises work like this: Every year you get 2-3%, or maybe 4-5% if you perform better. That's partially true. But there's another layer companies use to control costs.</p>
+                
+                <p><strong>Companies use a bell curve distribution system for merit increases.</strong></p>
+                
+                <p>Here's how it works: Companies decide a total budget for raises (let's say 3% of payroll). Then they distribute it along a bell curve:</p>
+
+                <div class="salary-example">
+                • Top 10% of employees:  6-7% raises<br>
+                • Next 30% of employees: 2-3% raises<br>
+                • Middle 40% of employees: 1-2% raises<br>
+                • Bottom 20% of employees: 0-1% raises
+                </div>
+                
+                <p>Let that sink in. <strong>You can do everything right and still get a 1-2% raise. Only 10% of people get the big raises.</strong></p>
+                
+                <p>This is intentional. This is how they control compensation costs. No matter how hard you work, you're competing against your colleagues for a limited pool of raises. And the odds are against you.</p>
+
+                <div class="highlight-box">
+                    <strong>The most important insight:</strong> A promotion usually gives you an 8-12% raise—<strong>outside the bell curve system.</strong> Merit raises are capped. Promotions aren't.
+                </div>
+
+                <h2>Where You Actually Stand (And Why You Need to Know)</h2>
+                
+                <p>Right now, you're probably hired somewhere in the bottom 40% of your paygrade—around the 30th-40th percentile. That means there's $15,000-$30,000 sitting between you and the midpoint. And you don't even know it exists.</p>
+                
+                <p>Here's what this means for your career:</p>
+                
+                <ul>
+                    <li>Negotiating your initial offer matters more than any promotion merit raise you'll ever get</li>
+                    <li>Negotiating during promotions matters more than asking during normal merit cycles</li>
+                    <li>Understanding your market value is the only leverage you have</li>
+                </ul>
+
+                <h2>The Competitive Advantage: Knowing What They Hide</h2>
+                
+                <p><strong>Most companies don't publish their paygrades and salary bands.</strong> You won't find it on the company intranet. HR won't just tell you.</p>
+                
+                <p>So why should you care?</p>
+                
+                <p>The fact that companies hide this information is proof the information is valuable. If paygrades didn't matter, they wouldn't protect them. If they didn't cost them money, they wouldn't keep it secret. <strong>They protect information they know will cost them money when you discover it.</strong></p>
+                
+                <p>Your job is to shine a light on your own situation. You're going to research what your job pays. You're going to figure out where you stand in your paygrade. And you're going to use that as leverage.</p>
+
+                <h2>This Changes Everything</h2>
+                
+                <p>Understanding paygrades transforms how you approach your career:</p>
+                
+                <ul>
+                    <li>You stop hoping for a raise and start understanding constraints</li>
+                    <li>You stop accepting offers without knowing the range</li>
+                    <li>You realize that promotions are your real opportunity for meaningful salary growth</li>
+                    <li>You stop competing against your colleagues' merit raises and start competing during high-leverage moments</li>
+                </ul>
+                
+                <p>This isn't unfair. This is understanding how the game works. And once you understand the game, you stop being a victim of it. You become a player.</p>
+
+                <h2>Your Next Move</h2>
+                
+                <p>Knowing the structure is step one. The next step is finding out where you actually stand in the market. What is your job title actually worth? Are you at the 30th percentile or closer to the 50th?</p>
+                
+                <p>That's where research comes in. And I'll show you exactly how to find that data in the next article.</p>
+                
+                <p><strong>Once you have the data, fear disappears. Because you won't be guessing anymore. You'll have facts.</strong></p>
+            </section>
+
+            <footer class="article-footer">
+                <div class="related-articles" style="background: #f9f9f9; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <h4 style="margin-bottom: 1rem; color: #222;">Build Your Complete Negotiation Strategy</h4>
+                    <p style="color: #666; margin-bottom: 0.75rem;">Continue your learning journey with the other articles in this series:</p>
+                    <p><strong><a href="./article-why-underpaid.html" style="color: #0066cc; text-decoration: none; font-weight: 600;">Why You're Probably Underpaid</a></strong> — Understand the financial cost of not negotiating and why fear is holding you back.</p>
+                    <p><strong><a href="./article-research-your-worth.html" style="color: #0066cc; text-decoration: none; font-weight: 600;">The Three Ways to Research Your Worth</a></strong> — Discover the methods to find your actual market value.</p>
+                    <p><strong><a href="./article-calculate-market-value.html" style="color: #0066cc; text-decoration: none; font-weight: 600;">Calculating Your Market Value</a></strong> — Convert your research into Floor, Target, and Ceiling numbers.</p>
+                </div>
+                
+                <div class="author-bio">
+                    <h4>About Ivan Piatouski</h4>
+                    <p>Career coach and salary negotiation specialist helping professionals understand compensation systems and negotiate better offers. Founder of comprehensive courses on negotiation, interviews, and career strategy.</p>
+                </div>
+                <div class="article-cta">
+                    <h4>Ready to Understand Your Worth?</h4>
+                    <p>Learn the exact strategies to research your market value and negotiate your true salary potential.</p>
+                    <a href="../contact.html" class="cta-button">Get Started Today</a>
+                </div>
+            </footer>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2>Secure Your Dream Job & Maximize Your Compensation</h2>
+                <div class="footer-ctas">
+                    <a href="../contact.html" class="cta-primary">Work with Ivan</a>
+                    <a href="../contact.html" class="cta-secondary">Or contact me <span class="arrow">»</span></a>
+                </div>
+            </div>
+
+            <div class="footer-center">
+                <h3>Explore</h3>
+                <div class="footer-nav-item"><a href="../courses.html">Courses</a></div>
+                <div class="footer-nav-item"><a href="../blog.html">Articles</a></div>
+                <div class="footer-nav-item"><a href="../contact.html">Contact</a></div>
+            </div>
+
+            <div class="footer-right">
+                <h3>Learn More</h3>
+                <div class="footer-nav-item"><a href="../index.html">About</a></div>
+                <div class="footer-nav-item"><a href="../contact.html">Work with Ivan</a></div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© Ivan Piatouski. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

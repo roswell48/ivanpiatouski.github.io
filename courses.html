@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - Ivan Piatouski</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1000;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #333;
+            display: inline-block;
+            height: 50px;
+        }
+
+        .logo-img {
+            height: 100%;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: #0066cc;
+        }
+
+        nav li:last-child a {
+            background: #0066cc;
+            color: white !important;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            transition: background 0.2s;
+        }
+
+        nav li:last-child a:hover {
+            background: #0052a3;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: #0a0a0a;
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: #ccc;
+            line-height: 1.7;
+        }
+
+        /* Main */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Courses Grid */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .course-card.supreme {
+            border: 2px solid #0066cc;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.2);
+            transform: scale(1.02);
+            position: relative;
+        }
+
+        .course-card.supreme:hover {
+            transform: scale(1.04) translateY(-6px);
+            box-shadow: 0 15px 50px rgba(0, 102, 204, 0.25);
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 10;
+            border-radius: 0 8px 0 8px;
+        }
+
+        .course-modules {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .course-modules h4 {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.75rem;
+        }
+
+        .module-item {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .module-item::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #0066cc;
+            font-weight: bold;
+        }
+
+        .course-button {
+            transition: all 0.3s ease !important;
+        }
+
+        .course-card:not(.supreme) .course-button:hover {
+            background: #0052a3 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+        }
+
+        .course-card.supreme .course-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 102, 204, 0.4);
+            background: linear-gradient(135deg, #0052a3 0%, #003d80 100%) !important;
+        }
+
+        .course-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .course-image.image-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .course-image.image-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .course-image.image-4 {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .course-content {
+            padding: 2rem;
+        }
+
+        .course-title {
+            color: #00bcd4;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .course-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .course-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .author-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #ddd;
+        }
+
+        .author-name {
+            font-size: 0.85rem;
+            color: #00bcd4;
+            font-weight: 600;
+        }
+
+        .course-price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #00bcd4;
+        }
+
+        .course-meta {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        /* Footer */
+        footer {
+            background: #2a2a2a;
+            color: white;
+            padding: 4rem 0;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .footer-left {
+            grid-column: 1;
+        }
+
+        .footer-left h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .footer-ctas {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-ctas a {
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .footer-ctas a.cta-primary {
+            background: #0066cc;
+            color: white;
+            padding: 0.875rem 1.75rem;
+            font-weight: 700;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .footer-ctas a.cta-primary:hover {
+            background: #0052a3;
+        }
+
+        .footer-ctas a.cta-secondary {
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+
+        .footer-ctas a.cta-secondary:hover {
+            color: #0066cc;
+        }
+
+        .footer-ctas .arrow {
+            color: #0066cc;
+            margin-left: 0.5rem;
+        }
+
+        .footer-center,
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-nav-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-nav-item a {
+            text-decoration: none;
+            color: white;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-nav-item a:hover {
+            color: #0066cc;
+        }
+
+        .footer-nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: #0066cc;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .footer-nav-item:hover::after {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            grid-column: 1 / -1;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-left h2 {
+                font-size: 1.3rem;
+            }
+
+            .footer-bottom {
+                grid-column: 1;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo"><img src="./images/logo.svg" alt="Ivan" class="logo-img"></a>
+            <nav>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="blog.html">Articles</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="contact.html">Work with Ivan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>COURSES</h1>
+        <p>No-BS courses designed to help you build the skills that actually matter, take charge, and win where it counts.</p>
+    </section>
+
+    <main>
+        <div class="courses-grid">
+            <!-- Course 1: Module 1 - Market Value -->
+            <div class="course-card">
+                <div class="course-image">Market Value</div>
+                <div class="course-content">
+                    <h3 class="course-title">Module 1: Market Value</h3>
+                    <p class="course-description">Discover why you're underpaid, how companies structure pay, and research your actual market worth.</p>
+                    <div class="course-modules">
+                        <h4>6 Videos (~10 min each)</h4>
+                        <div class="module-item">Why You're Probably Underpaid</div>
+                        <div class="module-item">How Companies Structure Pay</div>
+                        <div class="module-item">Three Ways to Research Worth</div>
+                        <div class="module-item">Calculate Market Value</div>
+                        <div class="module-item">Adjust for Your Situation</div>
+                        <div class="module-item">Your Starting Number</div>
+                    </div>
+                    <div class="course-footer" style="margin-top: 1.5rem;">
+                        <div class="course-author">
+                            <div class="author-avatar"></div>
+                            <span class="author-name">Ivan Piatouski</span>
+                        </div>
+                        <div class="course-price">$197</div>
+                    </div>
+                    <a href="contact.html" class="course-button" style="margin-top: 1rem; display: inline-block; background: #0066cc; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.2s;">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Course 2: Module 2 - Landing a New Job -->
+            <div class="course-card">
+                <div class="course-image image-2">New Job</div>
+                <div class="course-content">
+                    <h3 class="course-title">Module 2: Landing a New Job</h3>
+                    <p class="course-description">Master interviews, dodge salary questions, and negotiate your best offer with confidence.</p>
+                    <div class="course-modules">
+                        <h4>9 Videos (~10-12 min each)</h4>
+                        <div class="module-item">Before You Interview</div>
+                        <div class="module-item">The Salary Question Dodge</div>
+                        <div class="module-item">Acing Interviews (Smartly)</div>
+                        <div class="module-item">Post-Interview Follow-Up</div>
+                        <div class="module-item">Your First Offer Arrived</div>
+                        <div class="module-item">Calculate Your Counter</div>
+                        <div class="module-item">Deliver Your Counter</div>
+                        <div class="module-item">Final Discussion Script</div>
+                        <div class="module-item">What If They Say No?</div>
+                    </div>
+                    <div class="course-footer" style="margin-top: 1.5rem;">
+                        <div class="course-author">
+                            <div class="author-avatar"></div>
+                            <span class="author-name">Ivan Piatouski</span>
+                        </div>
+                        <div class="course-price">$297</div>
+                    </div>
+                    <a href="contact.html" class="course-button" style="margin-top: 1rem; display: inline-block; background: #0066cc; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.2s;">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Course 3: Module 3 - Getting Ahead at Current Job -->
+            <div class="course-card">
+                <div class="course-image image-3">Current Job</div>
+                <div class="course-content">
+                    <h3 class="course-title">Module 3: Getting Ahead</h3>
+                    <p class="course-description">Navigate promotions and raises at your current company. Build your case and execute it perfectly.</p>
+                    <div class="course-modules">
+                        <h4>7 Videos (~8-10 min each)</h4>
+                        <div class="module-item">When Changing Jobs Isn't Option</div>
+                        <div class="module-item">Promotions vs. Raises</div>
+                        <div class="module-item">Position Yourself (Before)</div>
+                        <div class="module-item">Document Your Wins</div>
+                        <div class="module-item">Build Your Case</div>
+                        <div class="module-item">Have the Conversation</div>
+                        <div class="module-item">If They Say No</div>
+                    </div>
+                    <div class="course-footer" style="margin-top: 1.5rem;">
+                        <div class="course-author">
+                            <div class="author-avatar"></div>
+                            <span class="author-name">Ivan Piatouski</span>
+                        </div>
+                        <div class="course-price">$247</div>
+                    </div>
+                    <a href="contact.html" class="course-button" style="margin-top: 1rem; display: inline-block; background: #0066cc; color: white; padding: 0.75rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.2s;">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Course 4: B.O.L.L.S. - SUPREME COURSE -->
+            <div class="course-card supreme">
+                <div class="course-badge">SUPREME</div>
+                <div class="course-image image-4">B.O.L.L.S.</div>
+                <div class="course-content">
+                    <h3 class="course-title">B.O.L.L.S. - The Complete System</h3>
+                    <p class="course-description"><strong>Bold Offers: Learn Leverage Strategy.</strong> The ultimate course combining all three modules PLUS exclusive bonus content. The complete negotiation playbook.</p>
+                    <div style="background: #e8f4ff; border: 1px solid #0066cc; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center;">
+                        <p style="font-size: 0.85rem; color: #666; margin-bottom: 0.5rem;">Individual modules cost:</p>
+                        <p style="font-size: 0.9rem; color: #333; margin-bottom: 0.5rem;"><strong>$197 + $297 + $247 = $741</strong></p>
+                        <p style="font-size: 0.75rem; color: #0066cc; font-weight: 700; margin-bottom: 0;">Get all three + bonus for $597</p>
+                        <p style="font-size: 0.75rem; color: #0066cc; font-weight: 700;">SAVE $144 (19%)</p>
+                    </div>
+                    <div class="course-modules">
+                        <h4>Module 1: Market Value (6 videos)</h4>
+                        <div class="module-item">Complete market research & calculation framework</div>
+                        <h4 style="margin-top: 1rem;">Module 2: Landing a New Job (9 videos)</h4>
+                        <div class="module-item">End-to-end negotiation from interview to offer</div>
+                        <h4 style="margin-top: 1rem;">Module 3: Getting Ahead (7 videos)</h4>
+                        <div class="module-item">Raise & promotion strategy at current company</div>
+                        <h4 style="margin-top: 1rem;">Module 4: Bonus (2-3 videos)</h4>
+                        <div class="module-item">Leaving Your Job the Right Way</div>
+                        <div class="module-item">After the Raise: What's Next?</div>
+                    </div>
+                    <p style="margin-top: 1.5rem; font-size: 0.9rem; color: #0066cc; font-weight: 600; text-align: center;">✓ 25+ videos | ✓ 4+ hours | ✓ Lifetime access | ✓ Money-back guarantee</p>
+                    <div class="course-footer" style="margin-top: 1.5rem;">
+                        <div class="course-author">
+                            <div class="author-avatar"></div>
+                            <span class="author-name">Ivan Piatouski</span>
+                        </div>
+                        <div class="course-price" style="font-size: 1.5rem; font-weight: 700; color: #0066cc;">$597</div>
+                    </div>
+                    <a href="contact.html" class="course-button" style="margin-top: 1rem; display: inline-block; background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%); color: white; padding: 0.85rem 2rem; border-radius: 6px; text-decoration: none; font-weight: 700; transition: all 0.2s; font-size: 1rem;">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2>Secure Your Dream Job & Maximize Your Compensation</h2>
+                <div class="footer-ctas">
+                    <a href="contact.html" class="cta-primary">Work with Ivan</a>
+                    <a href="contact.html" class="cta-secondary">Or contact me <span class="arrow">»</span></a>
+                </div>
+            </div>
+
+            <div class="footer-center">
+                <div class="footer-nav-item"><a href="courses.html">Courses</a></div>
+                <div class="footer-nav-item"><a href="blog.html">Articles</a></div>
+                <div class="footer-nav-item"><a href="contact.html">Contact</a></div>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-nav-item"><a href="about.html">About</a></div>
+                <div class="footer-nav-item"><a href="contact.html">Work with Ivan</a></div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© Ivan Piatouski. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

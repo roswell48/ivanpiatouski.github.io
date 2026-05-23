@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Ivan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1.5rem 0;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #333;
+            display: inline-block;
+            height: 50px;
+        }
+
+        .logo-img {
+            height: 100%;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            display: block;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: #0066cc;
+        }
+
+        nav li:last-child a {
+            background: #0066cc;
+            color: white !important;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            transition: background 0.2s;
+        }
+
+        nav li:last-child a:hover {
+            background: #0052a3;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: #2a2a2a;
+            color: white;
+            padding: 4rem 0;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .footer-left {
+            grid-column: 1;
+        }
+
+        .footer-left h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .footer-ctas {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-ctas a {
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .footer-ctas a.cta-primary {
+            background: #0066cc;
+            color: white;
+            padding: 0.875rem 1.75rem;
+            font-weight: 700;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .footer-ctas a.cta-primary:hover {
+            background: #0052a3;
+        }
+
+        .footer-ctas a.cta-secondary {
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+
+        .footer-ctas a.cta-secondary:hover {
+            color: #0066cc;
+        }
+
+        .footer-ctas .arrow {
+            color: #0066cc;
+            margin-left: 0.5rem;
+        }
+
+        .footer-center,
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-nav-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-nav-item a {
+            text-decoration: none;
+            color: white;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-nav-item a:hover {
+            color: #0066cc;
+        }
+
+        .footer-nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: #0066cc;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .footer-nav-item:hover::after {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            grid-column: 1 / -1;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-left h2 {
+                font-size: 1.3rem;
+            }
+
+            .footer-bottom {
+                grid-column: 1;
+            }
+        }
+
+        nav a.active {
+            color: #0066cc;
+        }
+
+        /* Main */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Content */
+        .content {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .intro {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            margin: 2rem 0;
+        }
+
+        /* Form */
+        .form-wrapper {
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+        }
+
+        label {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        input,
+        textarea {
+            padding: 0.75rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        button {
+            background: #0066cc;
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background: #0052a3;
+        }
+
+        button:disabled {
+            background: #99ccff;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        button:disabled:hover {
+            background: #99ccff;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            display: none;
+            animation: slideInRight 0.3s ease-out, slideOutRight 0.3s ease-out 4.7s forwards;
+            font-weight: 500;
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .toast {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                width: auto;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .header-content {
+                padding: 0 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            main {
+                padding: 0 1rem;
+            }
+
+            .content {
+                padding: 2rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="successToast" class="toast"></div>
+    
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo"><img src="./images/logo.svg" alt="Ivan" class="logo-img"></a>
+            <nav>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="blog.html">Articles</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="contact.html">Work with Ivan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="content">
+            <h1>Get In Touch</h1>
+            <p class="intro">Have a question or want to work together? Drop me a message and I'll get back to you soon. How can I help?</p>
+            
+            <hr>
+
+            <div class="form-wrapper">
+                <form id="contactForm">
+                    <div data-fs-success class="success-msg" style="background: #d4edda; color: #155724; border: 1px solid #c3e6cb;">
+                        ✓ Thanks for reaching out! I'll get back to you within 24 hours.
+                    </div>
+
+                    <div data-fs-error class="error-msg" style="background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: none;"></div>
+
+                    <div class="form-group">
+                        <label for="name">Name *</label>
+                        <input type="text" id="name" name="name" required data-fs-field>
+                        <span data-fs-error="name" style="color: #d32f2f; font-size: 0.85rem; display: block; margin-top: 0.25rem;"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required data-fs-field>
+                        <span data-fs-error="email" style="color: #d32f2f; font-size: 0.85rem; display: block; margin-top: 0.25rem;"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <input type="text" id="subject" name="subject" required data-fs-field>
+                        <span data-fs-error="subject" style="color: #d32f2f; font-size: 0.85rem; display: block; margin-top: 0.25rem;"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" required data-fs-field></textarea>
+                        <span data-fs-error="message" style="color: #d32f2f; font-size: 0.85rem; display: block; margin-top: 0.25rem;"></span>
+                    </div>
+
+                    <button type="submit" data-fs-submit-btn>Send</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2>Secure Your Dream Job & Maximize Your Compensation</h2>
+                <div class="footer-ctas">
+                    <a href="contact.html" class="cta-primary">Work with Ivan</a>
+                    <a href="contact.html" class="cta-secondary">Or contact me <span class="arrow">»</span></a>
+                </div>
+            </div>
+
+            <div class="footer-center">
+                <div class="footer-nav-item"><a href="courses.html">Courses</a></div>
+                <div class="footer-nav-item"><a href="blog.html">Articles</a></div>
+                <div class="footer-nav-item"><a href="contact.html">Contact</a></div>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-nav-item"><a href="about.html">About</a></div>
+                <div class="footer-nav-item"><a href="contact.html">Work with Ivan</a></div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© Ivan Piatouski. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Formspree form
+        window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+        formspree('initForm', { formElement: '#contactForm', formId: 'mlgzqlnj' });
+
+        // Watch for successful form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const successDiv = document.querySelector('[data-fs-success]');
+            
+            // Use MutationObserver to detect when success message becomes visible
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    // Check if the success message is now visible
+                    if (successDiv && successDiv.offsetParent !== null) {
+                        showToast('✓ Message sent successfully! I\'ll get back to you soon.');
+                        // Stop observing after first successful submission
+                        observer.disconnect();
+                        // Restart observer for future submissions
+                        setTimeout(() => {
+                            observer.observe(successDiv, { attributes: true, attributeFilter: ['style', 'class'] });
+                        }, 100);
+                    }
+                });
+            });
+            
+            if (successDiv) {
+                observer.observe(successDiv, { attributes: true, attributeFilter: ['style', 'class'] });
+            }
+        });
+
+        function showToast(message) {
+            const toast = document.getElementById('successToast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000);
+        }
+
+        // Setup About links
+        document.addEventListener('DOMContentLoaded', function() {
+            const aboutLinks = document.querySelectorAll('a[href="about.html"]');
+            aboutLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
+                        e.preventDefault();
+                        const aboutSection = document.getElementById('about-section');
+                        if (aboutSection) {
+                            aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+</body>
+</html>
